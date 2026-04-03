@@ -21,7 +21,9 @@ interface XPState {
   achievements: Achievement[];
   xpLog: XPLogEntry[];
   activityFeed: ActivityEntry[];
+  currentAchievement: (Achievement & { agentId: string }) | null;
   unlockAchievement: (achievementId: string, agentId: string) => void;
+  clearCurrentAchievement: () => void;
   addXP: (agentId: string, amount: number, reason: string, taskId?: string) => void;
   addActivity: (activity: Omit<ActivityEntry, 'id' | 'timestamp'>) => void;
   getLeaderboard: () => { agentId: string; name: string; emoji: string; xp: number; level: string }[];
@@ -35,8 +37,12 @@ export const useXPStore = create<XPState>()(
       achievements: ACHIEVEMENTS,
       xpLog: [],
       activityFeed: INITIAL_ACTIVITY_FEED,
+      currentAchievement: null,
 
       unlockAchievement: (achievementId, agentId) => {
+        const achievement = get().achievements.find((a) => a.id === achievementId);
+        if (!achievement || achievement.unlockedBy?.includes(agentId)) return;
+
         set((state) => ({
           achievements: state.achievements.map((ach) =>
             ach.id === achievementId
@@ -47,13 +53,22 @@ export const useXPStore = create<XPState>()(
                 }
               : ach
           ),
+          currentAchievement: { ...achievement, agentId },
         }));
 
-        const achievement = get().achievements.find((a) => a.id === achievementId);
-        if (achievement) {
-          useAgentStore.getState().addXP(agentId, achievement.xpReward);
-        }
+        useAgentStore.getState().addXP(agentId, achievement.xpReward);
+        
+        get().addActivity({
+          agentId,
+          agentName: useAgentStore.getState().getAgentById(agentId)?.name || 'Unknown',
+          agentEmoji: useAgentStore.getState().getAgentById(agentId)?.emoji || '👤',
+          agentColor: useAgentStore.getState().getAgentById(agentId)?.color || '#FFFFFF',
+          action: `unlocked achievement: "${achievement.name}" (+${achievement.xpReward} XP)`,
+          xpEarned: achievement.xpReward,
+        });
       },
+
+      clearCurrentAchievement: () => set({ currentAchievement: null }),
 
       addXP: (agentId, amount, reason, taskId) => {
         const agent = useAgentStore.getState().getAgentById(agentId);
@@ -70,7 +85,7 @@ export const useXPStore = create<XPState>()(
         };
 
         set((state) => ({
-          xpLog: [entry, ...state.xpLog],
+          xpLog: [entry, ...state.xpLog.slice(0, 99)],
         }));
 
         useAgentStore.getState().addXP(agentId, amount);

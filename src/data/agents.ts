@@ -18,6 +18,7 @@ export interface LevelSystem {
   maxXP: number;
   color: string;
   icon: string;
+  perks: string[];
 }
 
 export const AGENTS: Agent[] = [
@@ -39,11 +40,11 @@ export const AGENTS: Agent[] = [
 ];
 
 export const LEVEL_SYSTEM: LevelSystem[] = [
-  { name: 'ROOKIE', minXP: 0,    maxXP: 499,  color: '#94A3B8', icon: '🔘' },
-  { name: 'AGENT',  minXP: 500,  maxXP: 1499, color: '#3B82F6', icon: '🔵' },
-  { name: 'ELITE',  minXP: 1500, maxXP: 2999, color: '#8B5CF6', icon: '🟣' },
-  { name: 'LEGEND', minXP: 3000, maxXP: 4999, color: '#FFD700', icon: '🟡' },
-  { name: 'MYTHIC', minXP: 5000, maxXP: 99999,color: '#00FFFF', icon: '⚡' },
+  { name: 'ROOKIE', minXP: 0,    maxXP: 499,  color: '#94A3B8', icon: '🔘', perks: ['Basic mission access', 'Single task slot', 'Standard XP rate'] },
+  { name: 'AGENT',  minXP: 500,  maxXP: 1499, color: '#3B82F6', icon: '🔵', perks: ['Multi-tasking enabled', 'Access to Priority tasks', 'Achievement bonuses'] },
+  { name: 'ELITE',  minXP: 1500, maxXP: 2999, color: '#8B5CF6', icon: '🟣', perks: ['Team leadership role', 'Critical mission access', 'Custom agent emoji'] },
+  { name: 'LEGEND', minXP: 3000, maxXP: 4999, color: '#FFD700', icon: '🟡', perks: ['Division lead status', 'Strategic oversight', 'Global XP multiplier'] },
+  { name: 'MYTHIC', minXP: 5000, maxXP: 99999,color: '#00FFFF', icon: '⚡', perks: ['Orchestrator level', 'Full system access', 'Legendary status badge'] },
 ];
 
 export const DIVISIONS = [

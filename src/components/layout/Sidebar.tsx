@@ -9,7 +9,7 @@ import {
   Trophy,
   Settings,
 } from 'lucide-react';
-import { useAgentStore } from '../store/useAgentStore';
+import { useAgentStore } from '../../store/useAgentStore';
 
 const navItems = [
   { path: '/', icon: Zap, label: 'Command Center' },
@@ -24,7 +24,9 @@ const navItems = [
 
 export default function Sidebar() {
   const location = useLocation();
-  const workingAgents = useAgentStore((state) => state.getWorkingAgents());
+  const workingAgentsCount = useAgentStore((state) => 
+    state.agents.filter((agent) => agent.status === 'working').length
+  );
 
   return (
     <aside className="fixed left-0 top-0 h-screen w-[240px] z-50 flex flex-col"
@@ -110,7 +112,7 @@ export default function Sidebar() {
 
         <div className="flex items-center justify-between text-xs text-gray-500">
           <span style={{ fontFamily: 'JetBrains Mono, monospace' }}>
-            {workingAgents.length}/15 Agents Active
+            {workingAgentsCount}/15 Agents Active
           </span>
           <span style={{ fontFamily: 'JetBrains Mono, monospace' }}>v1.0</span>
         </div>

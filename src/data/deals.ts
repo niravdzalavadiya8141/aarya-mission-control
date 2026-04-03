@@ -19,6 +19,16 @@ export interface Deal {
   updatedAt: string;
 }
 
+export const STATUS_CONFIG: Record<DealStatus, { label: string; color: string; bg: string }> = {
+  lead: { label: 'LEAD', color: '#94A3B8', bg: 'rgba(148, 163, 184, 0.1)' },
+  negotiating: { label: 'NEGOTIATING', color: '#00FFFF', bg: 'rgba(0, 255, 255, 0.1)' },
+  agreed: { label: 'AGREED', color: '#3B82F6', bg: 'rgba(59, 130, 246, 0.1)' },
+  'in-progress': { label: 'IN PROGRESS', color: '#8B5CF6', bg: 'rgba(139, 92, 246, 0.1)' },
+  delivered: { label: 'DELIVERED', color: '#F97316', bg: 'rgba(249, 115, 22, 0.1)' },
+  paid: { label: 'PAID', color: '#00FF88', bg: 'rgba(0, 255, 136, 0.1)' },
+  lost: { label: 'LOST', color: '#EF4444', bg: 'rgba(239, 68, 68, 0.1)' },
+};
+
 export const INITIAL_DEALS: Deal[] = [
   {
     id: 'deal-1',

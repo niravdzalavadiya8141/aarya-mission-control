@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #0A0A0F;
+  --bg-secondary: #0D1117;
+  --bg-card: #111827;
+  --bg-card-hover: #1F2937;
+  --border-default: #1E293B;
+  --border-glow: rgba(0,255,255,0.2);
+  --accent-cyan: #00FFFF;
+  --accent-pink: #FF00FF;
+  --accent-yellow: #FFD700;
+  --accent-green: #00FF88;
+  --accent-red: #FF3366;
+  --accent-purple: #8B5CF6;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #475569;
+  --glow-cyan: 0 0 20px rgba(0,255,255,0.4), 0 0 40px rgba(0,255,255,0.2);
+  --glow-pink: 0 0 20px rgba(255,0,255,0.4);
+  --glow-gold: 0 0 20px rgba(255,215,0,0.4);
+}
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background: #0A0A0F;
+  color: #F8FAFC;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', sans-serif;
+}
+
+@layer components {
+  .glass {
+    background: rgba(17, 24, 39, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 255, 255, 0.1);
+  }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 255, 0.2);
+}
